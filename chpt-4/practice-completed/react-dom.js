@@ -1545,7 +1545,7 @@ var shouldBeReleasedProperties = ['dispatchConfig', '_targetInst', 'nativeEvent'
 
 /**
  * @interface Event
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/
  */
 var EventInterface = {
   type: null,
@@ -1818,7 +1818,7 @@ var SyntheticEvent$1 = SyntheticEvent;
 
 /**
  * @interface Event
- * @see http://www.w3.org/TR/DOM-Level-3-Events/#events-compositionevents
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/#events-compositionevents
  */
 var SyntheticCompositionEvent = SyntheticEvent$1.extend({
   data: null
@@ -1826,7 +1826,7 @@ var SyntheticCompositionEvent = SyntheticEvent$1.extend({
 
 /**
  * @interface Event
- * @see http://www.w3.org/TR/2013/WD-DOM-Level-3-Events-20131105
+ * @see https://www.w3.org/TR/2013/WD-DOM-Level-3-Events-20131105
  *      /#events-inputevents
  */
 var SyntheticInputEvent = SyntheticEvent$1.extend({
@@ -2174,7 +2174,7 @@ function extractBeforeInputEvent(topLevelType, targetInst, nativeEvent, nativeEv
 
 /**
  * Create an `onBeforeInput` event to match
- * http://www.w3.org/TR/2013/WD-DOM-Level-3-Events-20131105/#events-inputevents.
+ * https://www.w3.org/TR/2013/WD-DOM-Level-3-Events-20131105/#events-inputevents.
  *
  * This event plugin is based on the native `textInput` event
  * available in Chrome, Safari, Opera, and IE. This event fires after
@@ -2337,7 +2337,7 @@ var injection$3 = {
 };
 
 /**
- * @see http://www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
+ * @see https://www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
  */
 var supportedInputTypes = {
   color: true,
@@ -2399,7 +2399,7 @@ function getEventTarget(nativeEvent) {
   }
 
   // Safari may fire events on text nodes (Node.TEXT_NODE is 3).
-  // @see http://www.quirksmode.org/js/events_properties.html
+  // @see https://www.quirksmode.org/js/events_properties.html
   return target.nodeType === TEXT_NODE ? target.parentNode : target;
 }
 
@@ -2966,14 +2966,14 @@ var capitalize = function (token) {
 ['xlink:actuate', 'xlink:arcrole', 'xlink:href', 'xlink:role', 'xlink:show', 'xlink:title', 'xlink:type'].forEach(function (attributeName) {
   var name = attributeName.replace(CAMELIZE, capitalize);
   properties[name] = new PropertyInfoRecord(name, STRING, false, // mustUseProperty
-  attributeName, 'http://www.w3.org/1999/xlink');
+  attributeName, 'https://www.w3.org/1999/xlink');
 });
 
 // String SVG attributes with the xml namespace.
 ['xml:base', 'xml:lang', 'xml:space'].forEach(function (attributeName) {
   var name = attributeName.replace(CAMELIZE, capitalize);
   properties[name] = new PropertyInfoRecord(name, STRING, false, // mustUseProperty
-  attributeName, 'http://www.w3.org/XML/1998/namespace');
+  attributeName, 'https://www.w3.org/XML/1998/namespace');
 });
 
 // Special case: this attribute exists both in HTML and SVG.
@@ -3271,7 +3271,7 @@ function isControlled(props) {
  * The rendered element will be initialized as unchecked (or `defaultChecked`)
  * with an empty value (or `defaultValue`).
  *
- * See http://www.w3.org/TR/2012/WD-html5-20121025/the-input-element.html
+ * See https://www.w3.org/TR/2012/WD-html5-20121025/the-input-element.html
  */
 
 function getHostProps(element, props) {
@@ -3737,7 +3737,7 @@ var SyntheticUIEvent = SyntheticEvent$1.extend({
 
 /**
  * Translation from modifier key to the associated property in the event.
- * @see http://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
  */
 
 var modifierKeyToProp = {
@@ -3766,7 +3766,7 @@ function getEventModifierState(nativeEvent) {
 
 /**
  * @interface MouseEvent
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/
  */
 var SyntheticMouseEvent = SyntheticUIEvent.extend({
   screenX: null,
@@ -3789,7 +3789,7 @@ var SyntheticMouseEvent = SyntheticUIEvent.extend({
 
 /**
  * @interface PointerEvent
- * @see http://www.w3.org/TR/pointerevents/
+ * @see https://www.w3.org/TR/pointerevents/
  */
 var SyntheticPointerEvent = SyntheticMouseEvent.extend({
   pointerId: null,
@@ -4309,7 +4309,7 @@ function addEventCaptureListener(element, eventType, listener) {
 
 /**
  * @interface Event
- * @see http://www.w3.org/TR/css3-animations/#AnimationEvent-interface
+ * @see https://www.w3.org/TR/css3-animations/#AnimationEvent-interface
  * @see https://developer.mozilla.org/en-US/docs/Web/API/AnimationEvent
  */
 var SyntheticAnimationEvent = SyntheticEvent$1.extend({
@@ -4320,7 +4320,7 @@ var SyntheticAnimationEvent = SyntheticEvent$1.extend({
 
 /**
  * @interface Event
- * @see http://www.w3.org/TR/clipboard-apis/
+ * @see https://www.w3.org/TR/clipboard-apis/
  */
 var SyntheticClipboardEvent = SyntheticEvent$1.extend({
   clipboardData: function (event) {
@@ -4330,7 +4330,7 @@ var SyntheticClipboardEvent = SyntheticEvent$1.extend({
 
 /**
  * @interface FocusEvent
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/
  */
 var SyntheticFocusEvent = SyntheticUIEvent.extend({
   relatedTarget: null
@@ -4475,7 +4475,7 @@ function getEventKey(nativeEvent) {
 
 /**
  * @interface KeyboardEvent
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/
  */
 var SyntheticKeyboardEvent = SyntheticUIEvent.extend({
   key: getEventKey,
@@ -4527,7 +4527,7 @@ var SyntheticKeyboardEvent = SyntheticUIEvent.extend({
 
 /**
  * @interface DragEvent
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/
  */
 var SyntheticDragEvent = SyntheticMouseEvent.extend({
   dataTransfer: null
@@ -4535,7 +4535,7 @@ var SyntheticDragEvent = SyntheticMouseEvent.extend({
 
 /**
  * @interface TouchEvent
- * @see http://www.w3.org/TR/touch-events/
+ * @see https://www.w3.org/TR/touch-events/
  */
 var SyntheticTouchEvent = SyntheticUIEvent.extend({
   touches: null,
@@ -4550,7 +4550,7 @@ var SyntheticTouchEvent = SyntheticUIEvent.extend({
 
 /**
  * @interface Event
- * @see http://www.w3.org/TR/2009/WD-css3-transitions-20090320/#transition-events-
+ * @see https://www.w3.org/TR/2009/WD-css3-transitions-20090320/#transition-events-
  * @see https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent
  */
 var SyntheticTransitionEvent = SyntheticEvent$1.extend({
@@ -4561,7 +4561,7 @@ var SyntheticTransitionEvent = SyntheticEvent$1.extend({
 
 /**
  * @interface WheelEvent
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ * @see https://www.w3.org/TR/DOM-Level-3-Events/
  */
 var SyntheticWheelEvent = SyntheticMouseEvent.extend({
   deltaX: function (event) {
@@ -4739,7 +4739,7 @@ var SimpleEventPlugin = {
           }
         }
         // HTML Events
-        // @see http://www.w3.org/TR/html5/index.html#events-0
+        // @see https://www.w3.org/TR/html5/index.html#events-0
         EventConstructor = SyntheticEvent$1;
         break;
     }
@@ -5005,7 +5005,7 @@ function getListeningForDocument(mountAt) {
  * top-level listeners to the document object only, at least for these
  * movement types of events and possibly all events.
  *
- * @see http://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
+ * @see https://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
  *
  * Also, `keyup`/`keypress`/`keydown` do not bubble to the window on IE, but
  * they bubble to document.
@@ -6379,9 +6379,9 @@ function restoreControlledState$3(element, props) {
   updateWrapper$1(element, props);
 }
 
-var HTML_NAMESPACE$1 = 'http://www.w3.org/1999/xhtml';
-var MATH_NAMESPACE = 'http://www.w3.org/1998/Math/MathML';
-var SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+var HTML_NAMESPACE$1 = 'https://www.w3.org/1999/xhtml';
+var MATH_NAMESPACE = 'https://www.w3.org/1998/Math/MathML';
+var SVG_NAMESPACE = 'https://www.w3.org/2000/svg';
 
 var Namespaces = {
   html: HTML_NAMESPACE$1,
@@ -6570,7 +6570,7 @@ function dangerousStyleValue(name, value, isCustomProperty) {
   // the markup. If you provide unsafe user data here they can inject
   // arbitrary CSS which may be problematic (I couldn't repro this):
   // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
-  // http://www.thespanner.co.uk/2007/11/26/ultimate-xss-css-injection/
+  // https://www.thespanner.co.uk/2007/11/26/ultimate-xss-css-injection/
   // This is not an XSS hole but instead a potential CSS injection issue
   // which has lead to a greater discussion about how we're going to
   // trust URLs moving forward. See #2115901
@@ -6641,7 +6641,7 @@ var msPattern = /^ms-/;
  *   > hyphenateStyleName('msTransition')
  *   < "-ms-transition"
  *
- * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
+ * As Modernizr suggests (https://modernizr.com/docs/#prefixed), an `ms` prefix
  * is converted to `-ms-`.
  *
  * @param {string} string
@@ -6707,7 +6707,7 @@ var msPattern$1 = /^-ms-/;
  *   < "msTransition"
  *
  * As Andi Smith suggests
- * (http://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
+ * (https://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
  * is converted to lowercase `ms`.
  *
  * @param {string} string
@@ -7875,7 +7875,7 @@ function trapClickOnNonInteractiveElement(node) {
   // non-interactive elements, which means delegated click listeners do not
   // fire. The workaround for this bug involves attaching an empty click
   // listener on the target node.
-  // http://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
+  // https://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
   // Just set it using the onclick property so that we don't have to manage any
   // bookkeeping for it. Not sure if we need to clear it when the listener is
   // removed.

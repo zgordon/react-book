@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Hello World</title>
+  <title>Chapter 4 Practice Exercises</title>
   <script src="react.js"></script>
   <script src="react-dom.js"></script>
 </head>
@@ -20,9 +20,9 @@
     // Practice #2
     // Create a variable called h1LinkEl
     // Use createElement to create an h1 element tag with a link inside of it
-    // Make the link point to http://reactjs.org/ and include the text "React"
+    // Make the link point to https://reactjs.org/ and include the text "React"
     const h1LinkEl = React.createElement("h1", {},
-      React.createElement("a", { href: "http://reactjs.org/" }, "React")
+      React.createElement("a", { href: "https://reactjs.org/" }, "React")
     );
 
     // Practice #3
@@ -42,20 +42,20 @@
     // Create a component named "List"
     // Have it return an unordered list with a class of "react-links" and an ID of "top"
     // Inside the list include 3 list items
-    // The first list item should be a link to the "React Docs" "http://reactjs.org/docs"
+    // The first list item should be a link to the "React Docs" "https://reactjs.org/docs"
     // The second list item should be a link to the "ReactDOM Docs" overview "https://reactjs.org/docs/react-dom.html"
     // The third should be a link to a React related resource of your choice
     function List() {
       return (
         React.createElement("ul", { className: "react-links", id: "top" },
           React.createElement("li", {},
-            React.createElement("a", { href: "http://reactjs.org/docs" }, "React Docs")
+            React.createElement("a", { href: "https://reactjs.org/docs" }, "React Docs")
           ),
           React.createElement("li", {},
             React.createElement("a", { href: "https://reactjs.org/docs/react-dom.html" }, "ReactDOM Docs")
           ),
           React.createElement("li", {},
-            React.createElement("a", { href: "http://reactexplained.com/" }, "React Explained Book")
+            React.createElement("a", { href: "https://reactexplained.com/" }, "React Explained Book")
           ),
         )
       )
@@ -75,7 +75,7 @@
 
     ReactDOM.render(
       // Place your element variable or component function call here to test
-      App(),
+      boldLinkPEl,
       document.getElementById('root')
     );
 
