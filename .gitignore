@@ -4,6 +4,7 @@ composer.lock
 /logs/
 /reports/
 play.js
+node_modules/
 
 # You want to have .DS_Store and other environment files/packages in your .gitignore_global configuration.
 # @see https://knowthecode.io/labs/local-development-environment-setup-mac/install-configure-git
