@@ -48,7 +48,6 @@ const FullName = props => (
 /*
   7. Create a <Username /> component that displays the username
 */
-const Username = ({ username }) => <p>{username}</p>;
 
 /*
   8. Destructure the props you will need
