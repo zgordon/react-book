@@ -26,8 +26,8 @@ const Practice4 = () => {
 const User = props => {
   return (
     <div className="user">
-      <h1>Hi ___!</h1>
-      <p>Username: ___</p>
+      <h1>Hi FIRSTNAME_HERE!</h1>
+      <p>Username: USERNAME_HERE</p>
     </div>
   );
 };

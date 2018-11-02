@@ -4,6 +4,7 @@ const Practice2 = () => {
   /*
     1. Create post object with an id and title
   */
+  const post = {};
   return (
     <div className="practice">
       {/* 

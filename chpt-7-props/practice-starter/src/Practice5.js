@@ -15,7 +15,7 @@ const Practice5 = () => {
       {/*         
         1. Spread the "user" object into User so each "user" property becomes it's own prop
       */}
-      <User {...user} />
+      <User />
     </div>
   );
 };

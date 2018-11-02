@@ -18,9 +18,9 @@ const Practice3 = () => {
   3. Pass title to the Headline component as props
   4. Pass author to the Byline component as props
 */
-const Post = () => {
-  return <article className="post">Add Header and Byline here</article>;
-};
+const Post = () => (
+  <article className="post">Add Header and Byline here</article>
+);
 
 /*
   5. Create a component named <Heading /> that accepts props
