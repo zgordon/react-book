@@ -40,6 +40,12 @@ class Practice3 extends React.Component {
               label = "Last Name"
               onChange = handleLast              
         */}
+        <UserForm
+          id="firstName"
+          label="First Name"
+          onChange={this.handleFirst}
+        />
+        <UserForm id="lastName" label="Last Name" onChange={this.handleLast} />
       </>
     );
   }
