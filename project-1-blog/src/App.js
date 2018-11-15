@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./Header";
 import Posts from "./Posts";
 import Post from "./Post";
-// import NewPostForm from "./NewPostForm";
+import NewPostForm from "./NewPostForm";
 // import "./App.css";
 
 class App extends Component {
@@ -26,6 +26,10 @@ class App extends Component {
       }
     ]
   };
+  addNewPost = post => {
+    post.id = this.state.posts.length + 1;
+    this.setState({ posts: [...this.state.posts, post] });
+  };
   componentDidMount() {}
   render() {
     return (
@@ -37,7 +41,10 @@ class App extends Component {
             path="/"
             render={() => <Posts posts={this.state.posts} />}
           />
-
+          <Route
+            path="/new/"
+            render={() => <NewPostForm addNewPost={this.addNewPost} />}
+          />
           <Route
             path="/post/:postId"
             render={props => (
@@ -55,5 +62,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;
