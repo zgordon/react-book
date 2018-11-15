@@ -4,4 +4,6 @@
 
 - Setup React Router
 
-- Simple Add Post Form
+- Simple Add Post Form w Notice Saved
+
+- Mardown Editor

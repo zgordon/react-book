@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Quill from "react-quill";
 
 class NewPostForm extends Component {
   state = {
@@ -16,6 +17,9 @@ class NewPostForm extends Component {
       content: this.state.content
     });
     this.setState({ title: "", content: "", saved: true });
+    setTimeout(() => {
+      this.setState({ saved: false });
+    }, 1600);
   };
   render() {
     return (
@@ -38,11 +42,9 @@ class NewPostForm extends Component {
         <p>
           <label htmlFor="form-content">Content:</label>
         </p>
-        <textarea
-          id="form-content"
+        <Quill
           value={this.state.content}
-          onChange={e => this.setState({ content: e.target.value })}
-          style={{ height: "6rem", minWidth: "12rem" }}
+          onChange={content => this.setState({ content })}
         />
         <p>
           <button type="submit">Save</button>

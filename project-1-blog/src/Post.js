@@ -4,7 +4,10 @@ const Post = ({ post }) => {
   return (
     <article>
       <h1>{post.title}</h1>
-      <div className="content">{post.content}</div>
+      <div
+        className="content"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
     </article>
   );
 };
