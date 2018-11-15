@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Header from "./Header";
 import Posts from "./Posts";
+import Post from "./Post";
+// import NewPostForm from "./NewPostForm";
 // import "./App.css";
 
 class App extends Component {
@@ -17,7 +20,7 @@ class App extends Component {
         content: "Lorem"
       },
       {
-        id: 1,
+        id: 3,
         title: "Third Post",
         content: "Lorem"
       }
@@ -26,9 +29,29 @@ class App extends Component {
   componentDidMount() {}
   render() {
     return (
-      <div className="App">
-        <Posts posts={this.state.posts} />
-      </div>
+      <Router>
+        <div className="App">
+          <Header />
+          <Route
+            exact
+            path="/"
+            render={() => <Posts posts={this.state.posts} />}
+          />
+
+          <Route
+            path="/post/:postId"
+            render={props => (
+              <div>
+                <Post
+                  post={this.state.posts.find(
+                    post => post.id === parseInt(props.match.params.postId)
+                  )}
+                />
+              </div>
+            )}
+          />
+        </div>
+      </Router>
     );
   }
 }

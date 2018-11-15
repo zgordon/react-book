@@ -2,11 +2,14 @@ import React from "react";
 import PostsItem from "./PostsItem";
 const Posts = ({ posts }) => {
   return (
-    <ul>
-      {posts.map(post => (
-        <PostsItem post={post} />
-      ))}
-    </ul>
+    <>
+      <h2>Posts</h2>
+      <ul>
+        {posts.map(post => (
+          <PostsItem key={post.id} post={post} />
+        ))}
+      </ul>
+    </>
   );
 };
 
