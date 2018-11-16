@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import SimpleStorage from "react-simple-storage";
 import Header from "./Header";
 import Message from "./Message";
 import Posts from "./Posts";
@@ -59,6 +60,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <SimpleStorage parent={this} />
           <Header />
           {this.state.message && <Message type={this.state.message} />}
           <Route

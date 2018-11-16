@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect, BrowserHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class DeletePost extends Component {
   state = {
