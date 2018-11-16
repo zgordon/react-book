@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Quill from "react-quill";
 
 class EditPostForm extends Component {
@@ -10,7 +11,6 @@ class EditPostForm extends Component {
     isQuillLoaded: false
   };
   componentDidMount(prevProps, prevState) {
-    console.log(this.props);
     this.setState({
       id: this.props.post.id,
       title: this.props.post.title,
@@ -26,19 +26,14 @@ class EditPostForm extends Component {
       content: this.state.content
     });
     this.setState({ updated: true });
-    setTimeout(() => {
-      this.setState({ updated: false });
-    }, 1600);
   };
   render() {
+    if (this.state.updated === true) {
+      return <Redirect to="/" />;
+    }
     return (
       <form onSubmit={this.handleUpdatePost}>
         <h1>Edit Post</h1>
-        {this.state.updated && (
-          <p style={{ color: "green" }}>
-            <strong>Post updated!</strong>
-          </p>
-        )}
         <p>
           <label htmlFor="form-title">Title:</label>
           <br />
@@ -57,7 +52,6 @@ class EditPostForm extends Component {
           <Quill
             defaultValue={this.state.content}
             onChange={(content, delta, source, editor) => {
-              console.log(editor.getContents());
               this.setState({ content: editor.getContents() });
             }}
           />

@@ -10,4 +10,4 @@
     - https://github.com/zenoamaro/react-quill#props
     - https://github.com/nozer/quill-delta-to-html/
 
-- 
+- Delete

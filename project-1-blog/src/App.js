@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./Header";
+import Message from "./Message";
 import Posts from "./Posts";
 import Post from "./Post";
 import NewPostForm from "./NewPostForm";
@@ -9,11 +10,19 @@ import EditPostForm from "./EditPostForm";
 
 class App extends Component {
   state = {
-    posts: []
+    posts: [],
+    updated: false,
+    message: null
   };
   addNewPost = post => {
     post.id = this.state.posts.length + 1;
-    this.setState({ posts: [...this.state.posts, post] });
+    this.setState({
+      posts: [...this.state.posts, post],
+      message: "Post saved!"
+    });
+    setTimeout(() => {
+      this.setState({ message: null });
+    }, 1600);
   };
   updatePost = updatedPost => {
     const postIndex = this.state.posts.findIndex(
@@ -26,7 +35,10 @@ class App extends Component {
       return a.id - b.id || a.title.localeCompare(b.title);
     });
 
-    this.setState({ posts: newPosts });
+    this.setState({ posts: newPosts, message: "Post udpated!" });
+    setTimeout(() => {
+      this.setState({ message: null });
+    }, 1600);
   };
   componentDidMount() {}
   render() {
@@ -34,6 +46,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header />
+          {this.state.message && <Message message={this.state.message} />}
           <Route
             exact
             path="/"

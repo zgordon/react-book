@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 const PostsItem = ({ post }) => {
   return (
     <li key={post.id}>
-      <Link to={`/post/${post.id}`}>{post.title}</Link>|
+      <h3>
+        <Link to={`/post/${post.id}`}>{post.title}</Link>
+      </h3>
       <Link to={`/edit/${post.id}`}>Edit</Link>
+      {" | "}
+      <Link to={`/delete/${post.id}`}>Delete</Link>
     </li>
   );
 };

@@ -6,7 +6,6 @@ const Post = ({ post }) => {
   return (
     <article>
       <h1>{post.title}</h1>
-      {console.log(post)}
       <div
         className="content"
         dangerouslySetInnerHTML={{ __html: contentHTML }}

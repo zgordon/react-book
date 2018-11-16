@@ -6,12 +6,9 @@ class NewPostForm extends Component {
   state = {
     title: "",
     content: "",
-    editor: null,
     saved: false
   };
-  componentDidUpdate(prevProps, prevState) {
-    // console.log(prevState, this.state);
-  }
+
   handleAddNewPost = e => {
     e.preventDefault();
     this.props.addNewPost({
@@ -19,10 +16,6 @@ class NewPostForm extends Component {
       content: this.state.content
     });
     this.setState({ saved: true });
-
-    // setTimeout(() => {
-    //   this.setState({ saved: false });
-    // }, 1600);
   };
   render() {
     if (this.state.saved === true) {
@@ -31,11 +24,6 @@ class NewPostForm extends Component {
     return (
       <form onSubmit={this.handleAddNewPost}>
         <h1>Add a New Post</h1>
-        {this.state.saved && (
-          <p style={{ color: "green" }}>
-            <strong>Post Saved!</strong>
-          </p>
-        )}
         <p>
           <label htmlFor="form-title">Title:</label>
           <br />
@@ -50,7 +38,6 @@ class NewPostForm extends Component {
         </p>
         <Quill
           onChange={(content, delta, source, editor) => {
-            console.log(content);
             this.setState({ content: editor.getContents(), editor });
           }}
         />
