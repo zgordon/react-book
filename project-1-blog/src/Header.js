@@ -8,7 +8,10 @@ const Header = props => (
     </p>
     <ul>
       <li>
-        <Link to="/">Home</Link> | <Link to="/new/">Add New +</Link>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/new/">Add New +</Link>
       </li>
     </ul>
   </header>

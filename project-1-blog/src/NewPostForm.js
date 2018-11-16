@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Quill from "react-quill";
 
 class NewPostForm extends Component {
   state = {
     title: "",
     content: "",
+    editor: null,
     saved: false
   };
   componentDidUpdate(prevProps, prevState) {
@@ -16,12 +18,16 @@ class NewPostForm extends Component {
       title: this.state.title,
       content: this.state.content
     });
-    this.setState({ title: "", content: "", saved: true });
-    setTimeout(() => {
-      this.setState({ saved: false });
-    }, 1600);
+    this.setState({ saved: true });
+
+    // setTimeout(() => {
+    //   this.setState({ saved: false });
+    // }, 1600);
   };
   render() {
+    if (this.state.saved === true) {
+      return <Redirect to="/" />;
+    }
     return (
       <form onSubmit={this.handleAddNewPost}>
         <h1>Add a New Post</h1>
@@ -43,8 +49,10 @@ class NewPostForm extends Component {
           <label htmlFor="form-content">Content:</label>
         </p>
         <Quill
-          value={this.state.content}
-          onChange={content => this.setState({ content })}
+          onChange={(content, delta, source, editor) => {
+            console.log(content);
+            this.setState({ content: editor.getContents(), editor });
+          }}
         />
         <p>
           <button type="submit">Save</button>
