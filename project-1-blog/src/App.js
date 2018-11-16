@@ -6,6 +6,8 @@ import Posts from "./Posts";
 import Post from "./Post";
 import NewPostForm from "./NewPostForm";
 import EditPostForm from "./EditPostForm";
+import DeletePost from "./DeletePost";
+
 // import "./App.css";
 
 class App extends Component {
@@ -18,7 +20,7 @@ class App extends Component {
     post.id = this.state.posts.length + 1;
     this.setState({
       posts: [...this.state.posts, post],
-      message: "Post saved!"
+      message: "saved"
     });
     setTimeout(() => {
       this.setState({ message: null });
@@ -28,14 +30,26 @@ class App extends Component {
     const postIndex = this.state.posts.findIndex(
       post => post.id === updatedPost.id
     );
-    const newPosts = this.state.posts;
+    const newPosts = [...this.state.posts];
     newPosts.splice(postIndex, 1);
     newPosts.push(updatedPost);
     newPosts.sort(function(a, b) {
       return a.id - b.id || a.title.localeCompare(b.title);
     });
 
-    this.setState({ posts: newPosts, message: "Post udpated!" });
+    this.setState({ posts: newPosts, message: "updated" });
+    setTimeout(() => {
+      this.setState({ message: null });
+    }, 1600);
+  };
+  deletePost = deletedPostId => {
+    const postIndex = this.state.posts.findIndex(
+      post => post.id === deletedPostId
+    );
+    const newPosts = [...this.state.posts];
+    newPosts.splice(postIndex, 1);
+
+    this.setState({ posts: newPosts, message: "deleted" });
     setTimeout(() => {
       this.setState({ message: null });
     }, 1600);
@@ -46,7 +60,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header />
-          {this.state.message && <Message message={this.state.message} />}
+          {this.state.message && <Message type={this.state.message} />}
           <Route
             exact
             path="/"
@@ -64,6 +78,16 @@ class App extends Component {
                   post => post.id === parseInt(props.match.params.postId)
                 )}
                 updatePost={this.updatePost}
+                deletePost={this.deletePost}
+              />
+            )}
+          />
+          <Route
+            path="/delete/:postId"
+            render={props => (
+              <DeletePost
+                postId={props.match.params.postId}
+                deletePost={this.deletePost}
               />
             )}
           />
