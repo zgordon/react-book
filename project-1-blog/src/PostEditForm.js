@@ -1,32 +1,49 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import firebase from "./firebase";
 import Quill from "react-quill";
+import { forEach } from "@firebase/util";
 
 class EditPostForm extends Component {
   state = {
-    id: "",
+    key: "",
     title: "",
     content: "",
     updated: false,
     isQuillLoaded: false
   };
-  componentDidMount(prevProps, prevState) {
-    this.setState({
-      id: this.props.post.id,
-      title: this.props.post.title,
-      content: this.props.post.content,
-      isQuillLoaded: true
-    });
-  }
   handleUpdatePost = e => {
     e.preventDefault();
     this.props.updatePost({
-      id: this.state.id,
+      key: this.state.key,
       title: this.state.title,
       content: this.state.content
     });
     this.setState({ updated: true });
   };
+  componentDidMount() {
+    // firebase.database().ref("posts"));
+    console.log(this.props.postSlug);
+    const postRef2 = firebase
+      .database()
+      .ref("posts")
+      .orderByChild("slug")
+      .equalTo(this.props.postSlug)
+      // .limitToFirst(1)
+      .once("value")
+      .then(snapshot => {
+        snapshot.forEach(post => {
+          // console.log(post.val().title);
+          this.setState({
+            key: post.key,
+            title: post.val().title,
+            content: post.val().content,
+            isQuillLoaded: true
+          });
+        });
+        console.log(this.state);
+      });
+  }
   render() {
     if (this.state.updated === true) {
       return <Redirect to="/" />;

@@ -7,12 +7,14 @@ const Posts = ({ posts }) => {
       <h2>Posts</h2>
       <ul>
         {posts.length < 1 && (
-          <li>
+          <li key="new">
             <Link to="/new/">Add your first post!</Link>
           </li>
         )}
         {posts.map(post => (
-          <PostsItem key={post.id} post={post} />
+          <li key={post.slug}>
+            <PostsItem post={post} />
+          </li>
         ))}
       </ul>
     </>

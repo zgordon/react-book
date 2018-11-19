@@ -6,7 +6,6 @@ const Message = ({ type }) => {
     updated: { color: "orange", message: "Post has been udpated!" },
     deleted: { color: "red", message: "Post has been deleted." }
   };
-  console.log(type);
   return (
     <div className="message" style={{ color: messages[type]["color"] }}>
       <p>

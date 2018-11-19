@@ -1,15 +1,26 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import SimpleStorage from "react-simple-storage";
+import firebase from "./firebase";
+// import SimpleStorage from "react-simple-storage";
+
 import Header from "./Header";
 import Message from "./Message";
 import Posts from "./Posts";
 import Post from "./Post";
-import NewPostForm from "./NewPostForm";
-import EditPostForm from "./EditPostForm";
+import PostNewForm from "./PostNewForm";
+import PostEditForm from "./PostEditForm";
 import DeletePost from "./DeletePost";
 
 // import "./App.css";
+const getSlugFromTitle = title => {
+  const slug = encodeURIComponent(
+    title
+      .toLowerCase()
+      .split(" ")
+      .join("-")
+  );
+  return slug;
+};
 
 class App extends Component {
   state = {
@@ -18,7 +29,9 @@ class App extends Component {
     message: null
   };
   addNewPost = post => {
-    post.id = this.state.posts.length + 1;
+    const postsRef = firebase.database().ref("posts");
+    post.slug = getSlugFromTitle(post.title);
+    postsRef.push(post);
     this.setState({
       posts: [...this.state.posts, post],
       message: "saved"
@@ -27,40 +40,54 @@ class App extends Component {
       this.setState({ message: null });
     }, 1600);
   };
+
   updatePost = updatedPost => {
-    const postIndex = this.state.posts.findIndex(
-      post => post.id === updatedPost.id
-    );
-    const newPosts = [...this.state.posts];
-    newPosts.splice(postIndex, 1);
-    newPosts.push(updatedPost);
-    newPosts.sort(function(a, b) {
-      return a.id - b.id || a.title.localeCompare(b.title);
+    const postRef = firebase.database().ref("posts/" + updatedPost.key);
+    postRef.update({
+      slug: getSlugFromTitle(updatedPost.title),
+      title: updatedPost.title,
+      content: updatedPost.content
     });
-
-    this.setState({ posts: newPosts, message: "updated" });
+    this.setState({ message: "updated" });
     setTimeout(() => {
       this.setState({ message: null });
     }, 1600);
   };
-  deletePost = deletedPostId => {
-    const postIndex = this.state.posts.findIndex(
-      post => post.id === deletedPostId
-    );
-    const newPosts = [...this.state.posts];
-    newPosts.splice(postIndex, 1);
 
-    this.setState({ posts: newPosts, message: "deleted" });
+  deletePost = deletedPost => {
+    console.log(deletedPost);
+    const postRef = firebase.database().ref("posts/" + deletedPost);
+    postRef.remove();
+    this.setState({ message: "deleted" });
     setTimeout(() => {
       this.setState({ message: null });
     }, 1600);
   };
-  componentDidMount() {}
+
+  componentDidMount() {
+    const postsRef = firebase.database().ref("posts");
+    postsRef.on("value", snapshot => {
+      const firebasePosts = snapshot.val();
+      const newState = [];
+      for (let post in firebasePosts) {
+        newState.push({
+          key: post,
+          // id: firebasePosts[post].id,
+          slug: firebasePosts[post].slug,
+          title: firebasePosts[post].title,
+          content: firebasePosts[post].content
+        });
+      }
+      this.setState({
+        posts: newState
+      });
+    });
+  }
   render() {
     return (
       <Router>
         <div className="App">
-          <SimpleStorage parent={this} />
+          {/* <SimpleStorage parent={this} /> */}
           <Header />
           {this.state.message && <Message type={this.state.message} />}
           <Route
@@ -69,40 +96,36 @@ class App extends Component {
             render={() => <Posts posts={this.state.posts} />}
           />
           <Route
-            path="/new/"
-            render={() => <NewPostForm addNewPost={this.addNewPost} />}
+            path="/post/:postSlug"
+            render={props => {
+              console.log(this.state.posts);
+              const post = this.state.posts.find(
+                post => post.slug === props.match.params.postSlug
+              );
+              return <div>{post && <Post post={post} />}</div>;
+            }}
           />
           <Route
-            path="/edit/:postId"
+            path="/new/"
+            render={() => <PostNewForm addNewPost={this.addNewPost} />}
+          />
+          <Route
+            path="/edit/:postSlug"
             render={props => (
-              <EditPostForm
-                post={this.state.posts.find(
-                  post => post.id === parseInt(props.match.params.postId)
-                )}
+              <PostEditForm
+                postSlug={props.match.params.postSlug}
                 updatePost={this.updatePost}
                 deletePost={this.deletePost}
               />
             )}
           />
           <Route
-            path="/delete/:postId"
+            path="/delete/:postSlug"
             render={props => (
               <DeletePost
-                postId={props.match.params.postId}
+                postSlug={props.match.params.postSlug}
                 deletePost={this.deletePost}
               />
-            )}
-          />
-          <Route
-            path="/post/:postId"
-            render={props => (
-              <div>
-                <Post
-                  post={this.state.posts.find(
-                    post => post.id === parseInt(props.match.params.postId)
-                  )}
-                />
-              </div>
             )}
           />
         </div>

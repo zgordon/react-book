@@ -8,7 +8,7 @@ class DeletePost extends Component {
   };
   componentDidMount() {
     if (window.confirm("Delete this post?")) {
-      this.props.deletePost(this.props.postId);
+      this.props.deletePost(this.props.postSlug);
       this.setState({ isDeleted: true });
     } else {
       this.setState({ isCanceled: true });
@@ -18,7 +18,7 @@ class DeletePost extends Component {
     if (this.state.isDeleted === true || this.state.isCanceled === true) {
       return <Redirect to="/" />;
     }
-    return <p>Delete {this.props.postId}</p>;
+    return <p>Delete {this.props.postSlug}</p>;
   }
 }
 export default DeletePost;
