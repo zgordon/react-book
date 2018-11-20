@@ -12,6 +12,6 @@
 
 - Delete
 
-- Get Posts from Firebase
-    - Using key
-- 
+- Add Firebase Integration
+
+- Add Firebase Authentication

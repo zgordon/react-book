@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PostsItem from "./PostsItem";
+import PostsItem from "./Item";
 const Posts = ({ posts }) => {
   return (
     <>

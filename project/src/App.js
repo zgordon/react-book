@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import firebase from "./firebase";
-// import SimpleStorage from "react-simple-storage";
+import SimpleStorage from "react-simple-storage";
 
-import Header from "./Header";
-import Message from "./Message";
-import Posts from "./Posts";
-import Post from "./Post";
-import PostNewForm from "./PostNewForm";
-import PostEditForm from "./PostEditForm";
-import DeletePost from "./DeletePost";
+import Header from "./components/Header";
+import Login from "./components/Auth/Login";
+import Message from "./components/Message";
+import Posts from "./components/Posts/Index";
+import Post from "./components/Post/Index";
+import PostNewForm from "./components/Form/New";
+import PostEditForm from "./components/Form/Edit";
+import DeletePost from "./components/Post/Delete";
 
 // import "./App.css";
 const getSlugFromTitle = title => {
@@ -24,10 +25,35 @@ const getSlugFromTitle = title => {
 
 class App extends Component {
   state = {
+    authenticated: false,
     posts: [],
     updated: false,
     message: null
   };
+
+  onLogin = ({ email, password }) => {
+    console.log(email, password);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(user => {
+        this.setState({ authenticated: true });
+      })
+      .catch(error => console.log(error.message));
+  };
+
+  onLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.setState({ authenticated: false });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   addNewPost = post => {
     const postsRef = firebase.database().ref("posts");
     post.slug = getSlugFromTitle(post.title);
@@ -87,8 +113,11 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          {/* <SimpleStorage parent={this} /> */}
-          <Header />
+          <SimpleStorage parent={this} />
+          <Header
+            authenticated={this.state.authenticated}
+            onLogout={this.onLogout}
+          />
           {this.state.message && <Message type={this.state.message} />}
           <Route
             exact
@@ -103,6 +132,17 @@ class App extends Component {
                 post => post.slug === props.match.params.postSlug
               );
               return <div>{post && <Post post={post} />}</div>;
+            }}
+          />
+          <Route
+            exact
+            path="/login/"
+            render={() => {
+              if (this.state.authenticated) {
+                return <Redirect to="/" />;
+              } else {
+                return <Login onLogin={this.onLogin} />;
+              }
             }}
           />
           <Route

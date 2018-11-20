@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import firebase from "./firebase";
+import firebase from "../../firebase";
 import Quill from "react-quill";
-import { forEach } from "@firebase/util";
 
 class EditPostForm extends Component {
   state = {
@@ -24,25 +23,25 @@ class EditPostForm extends Component {
   componentDidMount() {
     // firebase.database().ref("posts"));
     console.log(this.props.postSlug);
-    const postRef2 = firebase
+    const postRef = firebase
       .database()
       .ref("posts")
       .orderByChild("slug")
       .equalTo(this.props.postSlug)
       // .limitToFirst(1)
-      .once("value")
-      .then(snapshot => {
-        snapshot.forEach(post => {
-          // console.log(post.val().title);
-          this.setState({
-            key: post.key,
-            title: post.val().title,
-            content: post.val().content,
-            isQuillLoaded: true
-          });
+      .once("value");
+    postRef.then(snapshot => {
+      snapshot.forEach(post => {
+        // console.log(post.val().title);
+        this.setState({
+          key: post.key,
+          title: post.val().title,
+          content: post.val().content,
+          isQuillLoaded: true
         });
-        console.log(this.state);
       });
+      console.log(this.state);
+    });
   }
   render() {
     if (this.state.updated === true) {

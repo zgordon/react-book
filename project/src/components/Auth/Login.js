@@ -1,0 +1,44 @@
+import React, { Component } from "react";
+
+export default class Login extends Component {
+  state = {
+    email: "",
+    password: ""
+  };
+  handleLogin = e => {
+    e.preventDefault();
+    const user = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    console.log(user);
+    this.props.onLogin(user);
+  };
+  render() {
+    return (
+      <div id="login">
+        <form name="login" onSubmit={this.handleLogin}>
+          <p>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              onChange={e => this.setState({ email: e.target.value })}
+            />
+          </p>
+          <p>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              onChange={e => this.setState({ password: e.target.value })}
+            />
+          </p>
+          <p>
+            <button disabled={!this.state.email && !this.state.password}>
+              Login
+            </button>
+          </p>
+        </form>
+      </div>
+    );
+  }
+}
