@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 1 - JavaScript Practice Exercises</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+
+    // Practice 1 - const, let, freeze
+    // Create a variable named "username" that should not be reassigned
+    // Create a variable named "loggedIn" that can be reassigned
+    // Create a post object with an id and title that is frozen
+    // Test whether you can reassign each of the variables
+    // Log out each of the variables to the page
+
+
+
+    // Practice 2 - Template Literals
+    // Create a variable for firstName and lastName
+    // Create a variable called message that can be reassigned
+    // Use a template literal to create message like "Hi firstName lastName!"
+    // Log out the message to the console
+    const firstName = "";
+    const lastName = ""
+
+    let message = ``;
+
+    console.log(message);
+
+
+    // Practice 3 - Arrow Functions
+    // Rewrite the function MyName using arrow function syntax
+    // Name the arrow function ArrowName
+    // Log the value of ArrowName passing in your name as a parameter
+
+    function MyName(name) {
+      return (
+        `<p>${name}<p>`
+      )
+    }
+
+
+
+    // Practice 4 - .filter() and .map()
+    // Filter the array of posts into a filteredPost variable
+    // Only return the posts that include "post" in the title
+    // Map through the array of filtred posts and log out the titles
+    // Try writing it by chaining the filter and map together
+    const posts = [
+      {
+        id: 1,
+        title: "First post"
+      },
+      {
+        id: 2,
+        title: "Second post"
+      },
+      {
+        id: 3,
+        title: "Last one"
+      }
+    ];
+
+
+
+    // Practice 5 - DOM Creation
+    // Map over the postsArray
+    // User document.createElement and document.createTextNode 
+    //  to create an h2 with a link and the title of the post
+    // Append each of the h2s to the postsContainer
+    const postsContainer = document.getElementById("root");
+    const postsArray = [
+      {
+        id: 1,
+        slug: "#first-post",
+        title: "First post"
+      },
+      {
+        id: 2,
+        slug: "#second-post",
+        title: "Second post"
+      },
+      {
+        id: 3,
+        slug: "#last-one",
+        title: "Last one"
+      }
+    ];
+
+
+  </script>
+</body>
+
+</html>
