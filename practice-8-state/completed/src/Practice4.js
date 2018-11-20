@@ -1,5 +1,38 @@
 import React from "react";
 
+<<<<<<< HEAD
+const Practice4 = () => {
+  const user = {
+    id: 1,
+    username: "zgordon",
+    firstName: "Zac",
+    lastName: "Gordon",
+    preferredName: "Zac",
+    url: "https://zacgordon.com",
+    twitter: "@zgordon"
+  };
+  return (
+    <div className="practice">
+      {/*         
+        1. Spread the "user" object into User so each "user" property becomes it's own prop
+      */}
+      <User {...user} />
+    </div>
+  );
+};
+
+/*
+  2. Destructure username and firstName from props
+*/
+const User = ({ firstName, username }) => {
+  return (
+    <div className="user">
+      <h1>Hi {firstName}!</h1>
+      <p>Username: {username}</p>
+    </div>
+  );
+};
+=======
 /*
   1. Create a functional component called Header that accepts props
   2. Return an <h2> with the value of text from props.text
@@ -56,5 +89,6 @@ class Practice4 extends React.Component {
     );
   }
 }
+>>>>>>> 74218353dc52f5b37ffa26390f32a87e46d19bf3
 
 export default Practice4;
