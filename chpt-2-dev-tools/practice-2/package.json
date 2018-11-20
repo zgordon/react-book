@@ -1,8 +1,0 @@
-{
-  "name": "npm-practice",
-  "version": "1.0.0",
-  "description": "NPM practice",
-  "dependencies": {
-    "moment": "^2.22.2"
-  }
-}

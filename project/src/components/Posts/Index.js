@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PostsItem from "./Item";
-const Posts = ({ posts }) => {
+const Posts = ({ posts, authenticated }) => {
   return (
     <>
       <h2>Posts</h2>
@@ -13,7 +13,7 @@ const Posts = ({ posts }) => {
         )}
         {posts.map(post => (
           <li key={post.slug}>
-            <PostsItem post={post} />
+            <PostsItem post={post} authenticated={authenticated} />
           </li>
         ))}
       </ul>

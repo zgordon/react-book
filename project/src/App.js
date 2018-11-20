@@ -122,7 +122,12 @@ class App extends Component {
           <Route
             exact
             path="/"
-            render={() => <Posts posts={this.state.posts} />}
+            render={() => (
+              <Posts
+                posts={this.state.posts}
+                authenticated={this.state.authenticated}
+              />
+            )}
           />
           <Route
             path="/post/:postSlug"
@@ -147,17 +152,29 @@ class App extends Component {
           />
           <Route
             path="/new/"
-            render={() => <PostNewForm addNewPost={this.addNewPost} />}
+            render={() => {
+              if (this.state.authenticated) {
+                return <PostNewForm addNewPost={this.addNewPost} />;
+              } else {
+                return <Redirect to="/" />;
+              }
+            }}
           />
           <Route
             path="/edit/:postSlug"
-            render={props => (
-              <PostEditForm
-                postSlug={props.match.params.postSlug}
-                updatePost={this.updatePost}
-                deletePost={this.deletePost}
-              />
-            )}
+            render={props => {
+              if (this.state.authenticated) {
+                return (
+                  <PostEditForm
+                    postSlug={props.match.params.postSlug}
+                    updatePost={this.updatePost}
+                    deletePost={this.deletePost}
+                  />
+                );
+              } else {
+                return <Redirect to="/" />;
+              }
+            }}
           />
           <Route
             path="/delete/:postSlug"
