@@ -46,13 +46,13 @@ const FullName = ({ firstName, lastName }) => (
 );
 
 /*
-  6. Create a <Username /> component that displays the username
+  7. Create a <Username /> component that displays the username
 */
 const Username = ({ username }) => <p>{username}</p>;
 
 /*
-  7. Destructure the props you will need
-  8. Make the Website and Twitter links work based on props
+  8. Destructure the props you will need
+  9. Make the Website and Twitter links work based on props
 */
 const Social = ({ url, twitter }) => {
   return (

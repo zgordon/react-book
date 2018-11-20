@@ -5,7 +5,12 @@
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+<<<<<<< HEAD
     "react-scripts": "2.0.4"
+=======
+    "react-scripts": "2.0.4",
+    "react-simple-storage": "^1.4.0"
+>>>>>>> 74218353dc52f5b37ffa26390f32a87e46d19bf3
   },
   "scripts": {
     "start": "react-scripts start",
