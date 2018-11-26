@@ -16,18 +16,6 @@ class Practice5 extends React.Component {
     5. Create a stopTimer function that clears 
         the timerID interval
   */
-  timerID;
-  componentDidMount() {
-    this.startTimer();
-  }
-  startTimer = () => {
-    this.timerID = setInterval(() => {
-      this.addPoint();
-    }, 300);
-  };
-  stopTimer = () => {
-    clearInterval(this.timerID);
-  };
   addPoint = () => {
     this.setState({ points: this.state.points + 1 });
   };
@@ -63,11 +51,6 @@ class BarChart extends React.Component {
     7. Inside of componentWillUnmount() log out that the <BarChart /> Component is unmounting
     8. The call this.props.stopTimer(); to stop the timer from running
   */
-
-  componentWillUnmount() {
-    console.log("<BarChart /> Unmounting...");
-    this.props.stopTimer();
-  }
 
   render() {
     const barStyles = {
