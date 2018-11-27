@@ -7,7 +7,7 @@ class Practice4 extends React.Component {
   };
 
   /* 
-    1. Call componentDidUpdate(prevProps, prevState)
+    1. Call componentDidUpdate(prevProps, prevState) {}
     2. Log out the prev state of points
     3. Log out the current state of points
     4. Write a conditional statement to check if 
@@ -48,7 +48,7 @@ class BarChart extends React.Component {
   }
 
   /* 
-    6. Call componentDidUpdate(prevProps, prevState)
+    6. Call componentDidUpdate(prevProps, prevState) {}
     7. Log out the prev props of points
     8. Log out the current props of points
     9. Write a conditional statement to check if 

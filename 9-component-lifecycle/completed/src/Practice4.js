@@ -7,7 +7,7 @@ class Practice4 extends React.Component {
   };
 
   /* 
-    1. Call componentDidUpdate(prevProps, prevState)
+    1. Call componentDidUpdate(prevProps, prevState) {}
     2. Log out the prev state of points
     3. Log out the current state of points
     4. Write a conditional statement to check if 
@@ -32,7 +32,7 @@ class Practice4 extends React.Component {
   };
   render() {
     return (
-      <div>
+      <>
         <BarChart points={this.state.points} />
         <h1>Points: {this.state.points}</h1>
         <Controls
@@ -41,7 +41,7 @@ class Practice4 extends React.Component {
           addPoint={this.addPoint}
           resetPoints={this.resetPoints}
         />
-      </div>
+      </>
     );
   }
 }
@@ -56,7 +56,7 @@ class BarChart extends React.Component {
   }
 
   /* 
-    1. Call componentDidUpdate(prevProps, prevState)
+    1. Call componentDidUpdate(prevProps, prevState) {}
     2. Log out the prev props of points
     3. Log out the current props of points
     4. Write a conditional statement to check if 

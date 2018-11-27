@@ -5,17 +5,18 @@ class Practice5 extends React.Component {
     goal: 10,
     points: 0
   };
-  /*
-    1. Add a new empty property of timerID
-    2. Call componentDidMount()
-    3. Inside of componentDidMoutn call a new function
-        this.startTimer()
-    4. Create a function startTimer that adds 1 point
-        to state every 300 miliseconds 
-        (assign the setInterval timer to timerID)
-    5. Create a stopTimer function that clears 
-        the timerID interval
-  */
+  timerID;
+  componentDidMount() {
+    this.startTimer();
+  }
+  startTimer = () => {
+    this.timerID = setInterval(() => {
+      this.addPoint();
+    }, 300);
+  };
+  stopTimer = () => {
+    clearInterval(this.timerID);
+  };
   addPoint = () => {
     this.setState({ points: this.state.points + 1 });
   };
@@ -27,7 +28,7 @@ class Practice5 extends React.Component {
     return (
       <div>
         {this.state.points < this.state.goal ? (
-          <BarChart points={this.state.points} stopTimer={this.stopTimer} />
+          <BarChart points={this.state.points} />
         ) : (
           <h1 style={{ color: "green" }}>GOAL!!!</h1>
         )}

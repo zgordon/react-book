@@ -33,5 +33,4 @@ class Practice2 extends React.Component {
   }
 }
 
-// const Post = props => <h2>{props.title}1</h2>;
 export default Practice2;

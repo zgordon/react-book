@@ -13,11 +13,7 @@ class Practice3 extends React.Component {
   };
   render() {
     return (
-      <div>
-        {/* 
-          1. Call the <BarChart />
-          2. Pass this.state.points as points props to <BarChart />          
-        */}
+      <>
         <BarChart points={this.state.points} />
         <h1>Points: {this.state.points}</h1>
         <Controls
@@ -26,15 +22,16 @@ class Practice3 extends React.Component {
           addPoint={this.addPoint}
           resetPoints={this.resetPoints}
         />
-      </div>
+      </>
     );
   }
 }
 
 class BarChart extends React.Component {
   /* 
-    1. Call shouldComponentUpdate(nextProps, nextState)
+    1. Call shouldComponentUpdate(nextProps, nextState) {}
     2. Check to see if nextProps.points is divisble by 5 with no remainder
+        (nextProps.points % 5)
     3. If it is not then return false
     4. If it is then return true
   */

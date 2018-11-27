@@ -5,17 +5,6 @@ class Practice5 extends React.Component {
     goal: 10,
     points: 0
   };
-  /*
-    1. Add a new empty property of timerID
-    2. Call componentDidMount()
-    3. Inside of componentDidMoutn call a new function
-        this.startTimer()
-    4. Create a function startTimer that adds 1 point
-        to state every 300 miliseconds 
-        (assign the setInterval timer to timerID)
-    5. Create a stopTimer function that clears 
-        the timerID interval
-  */
   timerID;
   componentDidMount() {
     this.startTimer();
@@ -38,6 +27,9 @@ class Practice5 extends React.Component {
   render() {
     return (
       <div>
+        {/* 
+          1. Add a stopTimer prop with a value equal to this.stopTimer
+        */}
         {this.state.points < this.state.goal ? (
           <BarChart points={this.state.points} stopTimer={this.stopTimer} />
         ) : (
@@ -59,9 +51,9 @@ class Practice5 extends React.Component {
 
 class BarChart extends React.Component {
   /*
-    6. Call componentWillUnmount()
-    7. Inside of componentWillUnmount() log out that the <BarChart /> Component is unmounting
-    8. The call this.props.stopTimer(); to stop the timer from running
+    2. Call componentWillUnmount() {}
+    3. Inside of componentWillUnmount() log out that the <BarChart /> Component is unmounting
+    4. The call this.props.stopTimer(); to stop the timer from running
   */
 
   componentWillUnmount() {

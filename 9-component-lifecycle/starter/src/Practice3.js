@@ -29,7 +29,7 @@ class Practice3 extends React.Component {
 
 class BarChart extends React.Component {
   /* 
-    1. Call shouldComponentUpdate(nextProps, nextState)
+    1. Call shouldComponentUpdate(nextProps, nextState) {}
     2. Check to see if nextProps.points is divisble by 5 with no remainder
         (nextProps.points % 5)
     3. If points has a remainder then return false
