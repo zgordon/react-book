@@ -8,21 +8,25 @@ class NewPostForm extends Component {
     content: "",
     saved: false
   };
-
   handleAddNewPost = e => {
     e.preventDefault();
-    this.props.addNewPost({
-      title: this.state.title,
-      content: this.state.content
-    });
-    this.setState({ saved: true });
+    if (this.state.title) {
+      const post = {
+        title: this.state.title,
+        content: this.state.content
+      };
+      this.props.addNewPost(post);
+      this.setState({ saved: true });
+    } else {
+      alert("Title required");
+    }
   };
   render() {
     if (this.state.saved === true) {
       return <Redirect to="/" />;
     }
     return (
-      <form onSubmit={this.handleAddNewPost}>
+      <form className="container" onSubmit={this.handleAddNewPost}>
         <h1>Add a New Post</h1>
         <p>
           <label htmlFor="form-title">Title:</label>
