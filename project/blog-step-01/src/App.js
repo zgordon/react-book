@@ -29,7 +29,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Posts onClick={this.handleClick} posts={this.state.posts} />
+        <Posts posts={this.state.posts} />
       </div>
     );
   }
