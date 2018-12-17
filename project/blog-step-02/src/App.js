@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import Header from "./components/Header";
 import Posts from "./components/Posts";
 import Post from "./components/Post";
+import NotFound from "./components/NotFound";
 
 import "./App.css";
 
@@ -35,20 +41,24 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header />
-          <Route
-            exact
-            path="/"
-            render={() => <Posts posts={this.state.posts} />}
-          />
-          <Route
-            path="/post/:postSlug"
-            render={props => {
-              const post = this.state.posts.find(
-                post => post.slug === props.match.params.postSlug
-              );
-              return <Post post={post} />;
-            }}
-          />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => <Posts posts={this.state.posts} />}
+            />
+            <Route
+              path="/post/:postSlug"
+              render={props => {
+                const post = this.state.posts.find(
+                  post => post.slug === props.match.params.postSlug
+                );
+                if (post) return <Post post={post} />;
+                else return <NotFound />;
+              }}
+            />
+            <Route component={NotFound} />
+          </Switch>
         </div>
       </Router>
     );
