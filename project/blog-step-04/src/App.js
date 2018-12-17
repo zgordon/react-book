@@ -30,6 +30,7 @@ class App extends Component {
       this.setState({ message: null });
     }, 1600);
   };
+
   render() {
     return (
       <Router>

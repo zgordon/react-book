@@ -7,28 +7,9 @@ const Header = props => (
       <li>
         <Link to="/">My Site</Link>
       </li>
-      {props.authenticated ? (
-        <>
-          <li>
-            <Link to="/new">New Post</Link>
-          </li>
-          <li>
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault();
-                props.onLogout();
-              }}
-            >
-              Logout
-            </a>
-          </li>
-        </>
-      ) : (
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-      )}
+      <li>
+        <Link to="/new">New Post</Link>
+      </li>
     </ul>
   </header>
 );
