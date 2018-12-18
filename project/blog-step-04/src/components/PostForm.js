@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Quill from "react-quill";
 
+import "react-quill/dist/quill.snow.css";
+
 class NewPostForm extends Component {
   state = {
     title: "",

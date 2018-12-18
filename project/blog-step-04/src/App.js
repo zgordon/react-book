@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Message from "./components/Message";
 import Posts from "./components/Posts";
 import Post from "./components/Post";
-import NewPostForm from "./components/NewPostForm";
+import PostForm from "./components/PostForm";
 import NotFound from "./components/NotFound";
 
 import "./App.css";
@@ -55,7 +55,7 @@ class App extends Component {
             <Route
               exact
               path="/new"
-              render={() => <NewPostForm addNewPost={this.addNewPost} />}
+              render={() => <PostForm addNewPost={this.addNewPost} />}
             />
             <Route component={NotFound} />
           </Switch>
