@@ -14,13 +14,7 @@ const Posts = ({ posts, deletePost }) => (
           <p>
             <Link to={`/edit/${post.slug}`}>Edit</Link>
             {" | "}
-            <button
-              className="linkLike"
-              onClick={e => {
-                e.preventDefault();
-                deletePost(post);
-              }}
-            >
+            <button className="linkLike" onClick={() => deletePost(post)}>
               Delete
             </button>
           </p>

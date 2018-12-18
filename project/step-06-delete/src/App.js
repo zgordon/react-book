@@ -51,10 +51,7 @@ class App extends Component {
   };
   deletePost = post => {
     if (window.confirm("Delete this post?")) {
-      const index = this.state.posts.findIndex(p => p.id === post.id);
-      const posts = this.state.posts
-        .slice(0, index)
-        .concat(this.state.posts.slice(index + 1));
+      const posts = this.state.posts.filter(p => p.id !== post.id);
       this.setState({ posts, message: "deleted" });
       setTimeout(() => {
         this.setState({ message: null });

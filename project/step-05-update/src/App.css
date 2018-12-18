@@ -1,10 +1,9 @@
-.App {
-}
+.App {}
 
   .App a {
     color: #26738D;
   }
-
+  
   .App h1 {
     font-size: 2rem;
   }
@@ -24,6 +23,7 @@
 
 .App-header {
   background-color: #353944;
+  color: #fff;
   font-size: calc(10px + 1vmin);
   padding: 1rem;
 }
@@ -83,9 +83,6 @@
     background: #FF3F69;
   }
 
-  /* .App-message.null {
-    display: none;
-  } */
 
  .App form {
   padding: 1rem;
@@ -121,11 +118,13 @@
     cursor: pointer;
   }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App button.linkLike {
+  border: none;
+  font-size: inherit;
+  color: #26738D;
+  text-decoration: underline;  
 }
+
+  .App button.linkLike:hover {
+     cursor: pointer;
+  }
