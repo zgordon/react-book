@@ -6,7 +6,7 @@ const Posts = ({ posts, authenticated }) => {
     <article className="posts">
       <h2>Posts</h2>
       <ul>
-        {posts.length < 1 && <li key="new">No posts yet!</li>}
+        {posts.length < 1 && <li key="empty">No posts yet!</li>}
         {posts.map(post => (
           <li key={post.slug}>
             <PostsItem post={post} authenticated={authenticated} />
