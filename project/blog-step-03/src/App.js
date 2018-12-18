@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Posts from "./components/Posts";
 import Post from "./components/Post";
-import NewPostForm from "./components/NewPostForm";
+import PostForm from "./components/PostForm";
 import NotFound from "./components/NotFound";
 
 import "./App.css";
@@ -47,7 +47,7 @@ class App extends Component {
             <Route
               exact
               path="/new"
-              render={() => <NewPostForm addNewPost={this.addNewPost} />}
+              render={() => <PostForm addNewPost={this.addNewPost} />}
             />
             <Route component={NotFound} />
           </Switch>

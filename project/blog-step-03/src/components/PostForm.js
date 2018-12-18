@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Quill from "react-quill";
 
-class NewPostForm extends Component {
+import "react-quill/dist/quill.snow.css";
+
+class PostForm extends Component {
   state = {
     title: "",
     content: "",
     saved: false
   };
-  handleAddNewPost = e => {
+  handlePostForm = e => {
     e.preventDefault();
     if (this.state.title) {
       const post = {
@@ -26,7 +28,7 @@ class NewPostForm extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <form className="container" onSubmit={this.handleAddNewPost}>
+      <form className="container" onSubmit={this.handlePostForm}>
         <h1>Add a New Post</h1>
         <p>
           <label htmlFor="form-title">Title:</label>
@@ -42,7 +44,7 @@ class NewPostForm extends Component {
         </p>
         <Quill
           onChange={(content, delta, source, editor) => {
-            this.setState({ content: editor.getContents(), editor });
+            this.setState({ content: editor.getContents() });
           }}
         />
         <p>
@@ -52,4 +54,4 @@ class NewPostForm extends Component {
     );
   }
 }
-export default NewPostForm;
+export default PostForm;
