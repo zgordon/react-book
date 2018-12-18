@@ -24,7 +24,7 @@ class PostForm extends Component {
       });
     }
   }
-  handleAddNewPost = e => {
+  handlePostForm = e => {
     e.preventDefault();
     if (this.state.post.title) {
       if (this.props.updatePost) {
@@ -42,7 +42,7 @@ class PostForm extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <form className="container" onSubmit={this.handleAddNewPost}>
+      <form className="container" onSubmit={this.handlePostForm}>
         <h1>Add a New Post</h1>
         <p>
           <label htmlFor="form-title">Title:</label>

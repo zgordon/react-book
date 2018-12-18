@@ -10,7 +10,7 @@ class NewPostForm extends Component {
     content: "",
     saved: false
   };
-  handleAddNewPost = e => {
+  handlePostForm = e => {
     e.preventDefault();
     if (this.state.title) {
       const post = {
@@ -28,7 +28,7 @@ class NewPostForm extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <form className="container" onSubmit={this.handleAddNewPost}>
+      <form className="container" onSubmit={this.handlePostForm}>
         <h1>Add a New Post</h1>
         <p>
           <label htmlFor="form-title">Title:</label>

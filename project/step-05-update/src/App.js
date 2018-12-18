@@ -44,7 +44,13 @@ class App extends Component {
       .slice(0, index)
       .concat(this.state.posts.slice(index + 1));
     const newPosts = [...posts, post].sort((a, b) => a.id - b.id);
-    this.setState({ posts: newPosts });
+    this.setState({
+      posts: newPosts,
+      message: "updated"
+    });
+    setTimeout(() => {
+      this.setState({ message: null });
+    }, 1600);
   };
   render() {
     return (
