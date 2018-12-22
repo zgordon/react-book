@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Posts = ({ posts, deletePost, authenticated }) => (
+const Posts = ({ posts, deletePost, isAuthenticated }) => (
   <article className="posts container">
     <h1>Posts</h1>
     <ul>
@@ -11,7 +11,7 @@ const Posts = ({ posts, deletePost, authenticated }) => (
           <h2>
             <Link to={`/post/${post.slug}`}>{post.title}</Link>
           </h2>
-          {authenticated && (
+          {isAuthenticated && (
             <p>
               <Link to={`/edit/${post.slug}`}>Edit</Link>
               {" | "}

@@ -137,7 +137,7 @@ class App extends Component {
                 this.state.isAuthenticated ? (
                   <PostForm
                     addNewPost={this.addNewPost}
-                    post={{ key: null, slug: "", title: "", content: "" }}
+                    post={{ id: 0, slug: "", title: "", content: "" }}
                   />
                 ) : (
                   <Redirect to="/login" />

@@ -20,7 +20,7 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    authenticated: false,
+    isAuthenticated: false,
     posts: [],
     message: null
   };
@@ -30,7 +30,7 @@ class App extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        this.setState({ authenticated: true });
+        this.setState({ isAuthenticated: true });
       })
       .catch(error => console.error(error));
   };
@@ -39,7 +39,7 @@ class App extends Component {
       .auth()
       .signOut()
       .then(() => {
-        this.setState({ authenticated: false });
+        this.setState({ isAuthenticated: false });
       })
       .catch(error => console.error(error));
   };
@@ -62,28 +62,23 @@ class App extends Component {
       this.setState({ message: null });
     }, 1600);
   };
-  updatePost = updatedPost => {
-    const postRef = firebase.database().ref("posts/" + updatedPost.key);
+  updatePost = post => {
+    const postRef = firebase.database().ref("posts/" + post.key);
     postRef.update({
-      slug: this.getNewSlugFromTitle(updatedPost.title),
-      title: updatedPost.title,
-      content: updatedPost.content
+      slug: this.getNewSlugFromTitle(post.title),
+      title: post.title,
+      content: post.content
     });
-
     this.setState({ message: "updated" });
     setTimeout(() => {
       this.setState({ message: null });
     }, 1600);
   };
-  deletePost = deletedPost => {
+  deletePost = post => {
     if (window.confirm("Delete this post?")) {
-      const postRef = firebase.database().ref("posts/" + deletedPost.key);
+      const postRef = firebase.database().ref("posts/" + post.key);
       postRef.remove();
-      const index = this.state.posts.findIndex(p => p.key === deletedPost.key);
-      const posts = this.state.posts
-        .slice(0, index)
-        .concat(this.state.posts.slice(index + 1));
-      this.setState({ posts, message: "deleted" });
+      this.setState({ message: "deleted" });
       setTimeout(() => {
         this.setState({ message: null });
       }, 1600);
@@ -92,17 +87,17 @@ class App extends Component {
   componentDidMount() {
     const postsRef = firebase.database().ref("posts");
     postsRef.on("value", snapshot => {
-      const firebasePosts = snapshot.val();
-      const newState = [];
-      for (let post in firebasePosts) {
-        newState.push({
+      const posts = snapshot.val();
+      const newStatePosts = [];
+      for (let post in posts) {
+        newStatePosts.push({
           key: post,
-          slug: firebasePosts[post].slug,
-          title: firebasePosts[post].title,
-          content: firebasePosts[post].content
+          slug: posts[post].slug,
+          title: posts[post].title,
+          content: posts[post].content
         });
-        this.setState({ posts: newState });
       }
+      this.setState({ posts: newStatePosts });
     });
   }
   render() {
@@ -111,7 +106,7 @@ class App extends Component {
         <div className="App">
           <SimpleStorage parent={this} />
           <Header
-            authenticated={this.state.authenticated}
+            isAuthenticated={this.state.isAuthenticated}
             onLogout={this.onLogout}
           />
           {this.state.message && <Message type={this.state.message} />}
@@ -121,7 +116,7 @@ class App extends Component {
               path="/"
               render={() => (
                 <Posts
-                  authenticated={this.state.authenticated}
+                  isAuthenticated={this.state.isAuthenticated}
                   posts={this.state.posts}
                   deletePost={this.deletePost}
                 />
@@ -144,7 +139,7 @@ class App extends Component {
               exact
               path="/login"
               render={() =>
-                !this.state.authenticated ? (
+                !this.state.isAuthenticated ? (
                   <Login onLogin={this.onLogin} />
                 ) : (
                   <Redirect to="/" />
@@ -155,7 +150,7 @@ class App extends Component {
               exact
               path="/new"
               render={() =>
-                this.state.authenticated ? (
+                this.state.isAuthenticated ? (
                   <PostForm
                     addNewPost={this.addNewPost}
                     post={{ key: null, slug: "", title: "", content: "" }}
