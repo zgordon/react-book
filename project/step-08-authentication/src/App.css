@@ -28,7 +28,8 @@
   padding: 1rem;
 }
 
-  .App-header a {
+  .App-header a,
+  .App .App-header button.linkLike {
     color:#fff;
     font-weight: normal;
   }

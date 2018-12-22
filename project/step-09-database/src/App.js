@@ -109,7 +109,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          {/* <SimpleStorage parent={this} /> */}
+          <SimpleStorage parent={this} />
           <Header
             authenticated={this.state.authenticated}
             onLogout={this.onLogout}

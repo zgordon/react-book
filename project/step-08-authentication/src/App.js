@@ -13,14 +13,34 @@ import Message from "./components/Message";
 import Posts from "./components/Posts";
 import Post from "./components/Post";
 import PostForm from "./components/PostForm";
+import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 
 import "./App.css";
 
 class App extends Component {
   state = {
+    isAuthenticated: false,
     posts: [],
     message: null
+  };
+  onLogin = (email, password) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(user => {
+        this.setState({ isAuthenticated: true });
+      })
+      .catch(error => console.error(error));
+  };
+  onLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.setState({ isAuthenticated: false });
+      })
+      .catch(error => console.error(error));
   };
   getNewSlugFromTitle = title =>
     encodeURIComponent(
@@ -69,14 +89,21 @@ class App extends Component {
       <Router>
         <div className="App">
           <SimpleStorage parent={this} />
-          <Header />
+          <Header
+            isAuthenticated={this.state.isAuthenticated}
+            onLogout={this.onLogout}
+          />
           {this.state.message && <Message type={this.state.message} />}
           <Switch>
             <Route
               exact
               path="/"
               render={() => (
-                <Posts posts={this.state.posts} deletePost={this.deletePost} />
+                <Posts
+                  isAuthenticated={this.state.isAuthenticated}
+                  posts={this.state.posts}
+                  deletePost={this.deletePost}
+                />
               )}
             />
             <Route
@@ -94,13 +121,28 @@ class App extends Component {
             />
             <Route
               exact
+              path="/login"
+              render={() =>
+                !this.state.isAuthenticated ? (
+                  <Login onLogin={this.onLogin} />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route
+              exact
               path="/new"
-              render={() => (
-                <PostForm
-                  addNewPost={this.addNewPost}
-                  post={{ id: 0, slug: "", title: "", content: "" }}
-                />
-              )}
+              render={() =>
+                this.state.isAuthenticated ? (
+                  <PostForm
+                    addNewPost={this.addNewPost}
+                    post={{ key: null, slug: "", title: "", content: "" }}
+                  />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
             />
             <Route
               path="/edit/:postSlug"
@@ -108,8 +150,10 @@ class App extends Component {
                 const post = this.state.posts.find(
                   post => post.slug === props.match.params.postSlug
                 );
-                if (post) {
+                if (post && this.state.isAuthenticated) {
                   return <PostForm updatePost={this.updatePost} post={post} />;
+                } else if (post && !this.state.isAuthenticated) {
+                  return <Redirect to="/login" />;
                 } else {
                   return <Redirect to="/" />;
                 }
