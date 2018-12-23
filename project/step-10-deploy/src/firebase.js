@@ -3,12 +3,12 @@ import "firebase/auth";
 import "firebase/database";
 
 const config = {
-  apiKey: "AIzaSyBabjCCC5wUxZgB4pru-nmBXM1BEIyszEw",
-  authDomain: "react-explained-blog-demo.firebaseapp.com",
-  databaseURL: "https://react-explained-blog-demo.firebaseio.com",
-  projectId: "react-explained-blog-demo",
-  storageBucket: "react-explained-blog-demo.appspot.com",
-  messagingSenderId: "983332576012"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID
 };
 firebase.initializeApp(config);
 export default firebase;
