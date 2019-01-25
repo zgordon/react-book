@@ -166,7 +166,7 @@ class App extends Component {
                 const post = this.state.posts.find(
                   post => post.slug === props.match.params.postSlug
                 );
-                if (post) {
+                if (post && this.state.isAuthenticated) {
                   return <PostForm updatePost={this.updatePost} post={post} />;
                 } else {
                   return <Redirect to="/" />;
