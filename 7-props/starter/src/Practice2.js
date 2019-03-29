@@ -19,7 +19,7 @@ const Practice2 = () => {
   4. Make the Post component accept props
   5. Have Post component rendr the post title and ID to the page
 */
-const Post = props => {
+const Post = () => {
   return <p>Render post title and id here</p>;
 };
 
