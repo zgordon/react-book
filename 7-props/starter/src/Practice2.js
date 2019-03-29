@@ -9,7 +9,7 @@ const Practice2 = () => {
     <div className="practice">
       {/* 
         2. Call the Post component below
-        3. Pass in the user object as a prop
+        3. Pass in the post object as a prop
       */}
     </div>
   );
