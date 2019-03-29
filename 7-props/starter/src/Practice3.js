@@ -15,7 +15,7 @@ const Practice3 = () => {
 
 /*
   2. Make the Post component accept props
-  3. Pass title to the Headline component as props
+  3. Pass title to the Heading component as props
   4. Pass author to the Byline component as props
 */
 const Post = () => (
