@@ -522,3 +522,13 @@ However, with this effect we do not pass any dependencies since we want it to co
 From here you should have a good idea of how to create functional components that leverage `useState` and `useEffect`.
 
 Now let's solidify what we have learned with some practice exercises.
+
+## Practice Exercises
+
+There are more detailed instructions in each of the corresponding practice exercise component files.
+
+1. Create a simple counter example using hooks for state
+2. Create a scoreboard for two teams to track points. Use hooks for values in state.
+3. Use the provided API to display a random picture of a cat. Use effect hooks.
+4. Add a timer to the previous example to refresh the picture every five seconds. Make sure to clear the timer when component rerenders or is removed.
+5. Context API Exercise (coming soon)
