@@ -346,7 +346,7 @@ In this chapter you learned about what purpose context serves in React apps and 
 
 Now let's practice using context in a few examples.
 
-## Practice Exercises (NOT COMPLETE)
+## Practice Exercises
 
 1. Create a new context file called `/src/context/UserContext`. In it create and export a `UserContext` using `React.createContext()`.
 2. Import `UserContext` into the App component pass the `user` from state and the `updateUser()` function to a UserContext provider component wrapping the other components in `<App />`.
