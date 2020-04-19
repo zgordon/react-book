@@ -348,10 +348,14 @@ Now let's practice using context in a few examples.
 
 ## Practice Exercises (NOT COMPLETE)
 
-1. Create a new file called `/context/theme-context`. Export a context for the theme.
-2. Create a new file called `/theme-styles.css`. Add custom theme styles.
-3. In the App component, import ThemeContext, add theme to state and setup the ThemeContext consumer component to provide the theme to the children components.
+1. Create a new context file called `/src/context/UserContext`. In it create and export a `UserContext` using `React.createContext()`.
+2. Import `UserContext` into the App component pass the `user` from state and the `updateUser()` function to a UserContext provider component wrapping the other components in `<App />`.
+3. Open the `SignUpForm` component and set the contextType to `UserContext` (make sure to import it as well). Now, replace the `user` from the component state with the use of `user` from `UserContext`. Then at the end of the `updateUser()` function, call `this.context.updateUser(user)` to update the user in context when a form field is changed.
+4. Now add a new context file for `FormContext`, import it into `App.js`, and place it inside of the `UserContext` provider so that all of the other components can consumer from it. Set the value of the FormContext provider an object that includes `step` from state and `updateStep()`.
+5. Finally we will configure the components that consume from `FormContext`.
 
-- Take a component tree using props and replace with context.
-- Add the ability for consuming components to update context.
-- Add a theme context to an demo application.
+- Start with the `NavBarStep` component and replace the `step` state with the step from `FormContext`.
+- Next, update the `StepButton` to use the context type of `FormContext` and call `this.context.updateStep(this.props.nextStep);` inside the `handleOnClick` function.
+- Then, in the `ProgressBar` component, replace the `step` from props with the `step` from `FormContext`.
+- From there, convert the `WelcomeMessage` to use the user information from `UserContext` instead of from props.
+- Finally, in the `SignUpForm` component, wrap the `this.currentStep()` call with the `FormContext` provider and pass `context` into `this.currentStep()` as a prop.
