@@ -517,6 +517,80 @@ Finally we have a timer effect that fetches the posts every 5 seconds. This also
 
 However, with this effect we do not pass any dependencies since we want it to continue to start again every time posts get refreshed.
 
+## Context Hooks with `useContext`
+
+In addition accessing state and the lifecycle, hooks also provide access to context.
+
+We will still setup our context in a file as we learned previously.
+
+```
+import React from "react";
+
+const UserContext = React.createContext();
+export default UserContext;
+```
+
+Then, We have to to setup a provider component to specify what tree of components has access to this context. So far, nothing is different from our look at context in the previous chapter.
+
+```
+import React, { useState } from "react";
+
+const App  = props => {
+  const [ user, setUser ] = useState({ id: 1 })
+  return(
+    <UserContext.Provider
+      value={{ user, setState }}
+    >
+      <Header />
+      <Content />
+      <Footer />
+    </UserContext.Provider
+  )
+}
+```
+
+Finally, to consume the context we can use `useContext` in any component with in the `<UserContext.Provider>` tree.
+
+```
+import React, { useContext } from "react";
+import UserContext from "../context/UserContext";
+
+const WelcomeMessage = () => {
+  const { user } = useContext(UserContext);
+  return (
+    <p>Welcome {user.id}</p>
+  );
+}
+```
+
+Here we are importing our UserContext as well as the `useContext` function. Then when we call `useContext()` we pass it the context we want to receive.
+
+The original structure of our `UserContext` included both `user` and `setUser`.
+
+Since we only need the `user` part of context, we destructure that:
+
+```
+const { user } = useContext(UserContext);
+```
+
+We could also just get the context directly:
+
+```
+const context = useContext(UserContext);
+```
+
+Or even destructure multiple values:
+
+```
+const { user, setUser } = useContext(UserContext);
+```
+
+As you can see, the setup for using context in class based and functional components is the same. You setup the context, likely in it's own file. Then you setup your context provider component with a value, usually from state, or involving functions to update the context.
+
+However, the consumption of context with hooks does not involve contextType or a consumer component.
+
+The syntax for `useContext` is very similar to `useState` and `useEffect`.
+
 ## What's Next?
 
 From here you should have a good idea of how to create functional components that leverage `useState` and `useEffect`.
@@ -532,3 +606,7 @@ There are more detailed instructions in each of the corresponding practice exerc
 3. Use the provided API to display a random picture of a cat. Use effect hooks.
 4. Add a timer to the previous example to refresh the picture every five seconds. Make sure to clear the timer when component rerenders or is removed.
 5. Context API Exercise (coming soon)
+
+```
+
+```

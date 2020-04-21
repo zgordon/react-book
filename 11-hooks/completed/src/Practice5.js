@@ -1,87 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
+import Header from "./components/Header";
+import NavBar from "./components/NavBar";
+import NavBarStep from "./components/NavBarStep";
+import MainContent from "./components/MainContent";
+import SignUpForm from "./components/SignUpForm";
+import Footer from "./components/Footer";
+import ProgressBar from "./components/ProgressBar";
 
-class Practice5 extends React.Component {
-  state = {
-    goal: 10,
-    points: 0
-  };
-  timerID;
-  componentDidMount() {
-    this.startTimer();
-  }
-  startTimer = () => {
-    this.timerID = setInterval(() => {
-      this.addPoint();
-    }, 300);
-  };
-  stopTimer = () => {
-    clearInterval(this.timerID);
-  };
-  addPoint = () => {
-    this.setState({ points: this.state.points + 1 });
-  };
-  resetPoints = () => {
-    this.setState({ points: 0 });
-    this.startTimer();
-  };
-  render() {
-    return (
-      <div>
-        {this.state.points < this.state.goal ? (
-          <BarChart points={this.state.points} />
-        ) : (
-          <h1 style={{ color: "green" }}>GOAL!!!</h1>
-        )}
-        <h1>
-          Points: {this.state.points}/{this.state.goal}
-        </h1>
-        <Controls
-          points={this.state.points}
-          goal={this.state.goal}
-          addPoint={this.addPoint}
-          resetPoints={this.resetPoints}
-        />
-      </div>
-    );
-  }
-}
+import UserContext from "./context/UserContext";
+import FormContext from "./context/FormContext";
 
-class BarChart extends React.Component {
-  /*
-    6. Call componentWillUnmount()
-    7. Inside of componentWillUnmount() log out that the <BarChart /> Component is unmounting
-    8. The call this.props.stopTimer(); to stop the timer from running
-  */
+import "./Practice5.css";
 
-  render() {
-    const barStyles = {
-      height: "100px",
-      width: "50px",
-      border: "1px #ccc solid",
-      position: "relative"
-    };
-    const fillStyles = {
-      height: `${this.props.points}0px`,
-      width: "50px",
-      backgroundColor: "green",
-      position: "absolute",
-      bottom: "0",
-      transition: "height .6s"
-    };
-    return (
-      <div className="bar" style={barStyles}>
-        <div className="fill" style={fillStyles} />
-      </div>
-    );
-  }
-}
+const Practice5 = () => {
+  const [user, setUser] = useState({});
+  const [step, setStep] = useState(`1`);
 
-const Controls = props => {
-  if (props.points >= props.goal) {
-    return <button onClick={props.resetPoints}>Start Over</button>;
-  } else {
-    return null;
-  }
+  const updateUser = (user) => {
+    setUser({ user });
+  };
+
+  const updateStep = (step) => {
+    setStep({ step });
+  };
+
+  return (
+    <div>
+      <UserContext.Provider
+        value={{ user: this.state.user, updateUser: this.updateUser }}
+      >
+        <FormContext.Provider
+          value={{ step: this.state.step, updateStep: this.updateStep }}
+        >
+          <Header>
+            <NavBar>
+              Signup Steps:
+              <NavBarStep step="1" />
+              <NavBarStep step="2" />
+              <NavBarStep step="3" />
+            </NavBar>
+          </Header>
+          <MainContent>
+            <SignUpForm />
+          </MainContent>
+          <Footer>
+            <ProgressBar />
+          </Footer>
+        </FormContext.Provider>
+      </UserContext.Provider>
+    </div>
+  );
 };
 
 export default Practice5;
