@@ -605,8 +605,4 @@ There are more detailed instructions in each of the corresponding practice exerc
 2. Create a scoreboard for two teams to track points. Use hooks for values in state.
 3. Use the provided API to display a random picture of a cat. Use effect hooks.
 4. Add a timer to the previous example to refresh the picture every five seconds. Make sure to clear the timer when component rerenders or is removed.
-5. Context API Exercise (coming soon)
-
-```
-
-```
+5. Convert the example from the context practice chapter (found ported over into `Practice5.js`) to use context hooks and functional components.
