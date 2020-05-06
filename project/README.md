@@ -155,7 +155,7 @@ const Posts = ({ posts }) => (
 export default Posts;
 ```
 
-Now you want to display a list item if no posts are displayed. It should go after the <h1> and look something like this:
+Now you want to display a list item if no posts are displayed. It should go after the `<h1>` and look something like this:
 
 ```
 <article className="posts container">
