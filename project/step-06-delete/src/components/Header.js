@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = props => (
+const Header = (props) => (
   <header className="App-header">
     <ul className="container">
       <li>
@@ -13,4 +13,5 @@ const Header = props => (
     </ul>
   </header>
 );
+
 export default Header;

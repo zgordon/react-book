@@ -1,41 +1,38 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
+import UserContext from "../context/UserContext";
 
-export default class Login extends Component {
-  state = {
-    email: "",
-    password: ""
+const Login = (props) => {
+  const { onLogin } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    onLogin(email, password);
   };
-  handleLogin = e => {
-    e.preventDefault();
-    console.log(this.state.email, this.state.password);
-    this.props.onLogin(this.state.email, this.state.password);
-  };
-  render() {
-    return (
-      <form className="container" name="login" onSubmit={this.handleLogin}>
-        <p>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            onChange={e => this.setState({ email: e.target.value })}
-          />
-        </p>
-        <p>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            onChange={e => this.setState({ password: e.target.value })}
-          />
-        </p>
-        <p>
-          <button
-            type="submit"
-            disabled={!this.state.email && !this.state.password}
-          >
-            Login
-          </button>
-        </p>
-      </form>
-    );
-  }
-}
+
+  return (
+    <form className="container" name="login" onSubmit={handleLogin}>
+      <p>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </p>
+      <p>
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          onChange={(event) => setPassword(event.target.value)}
+        />
+      </p>
+      <p>
+        <button type="submit" disabled={!email && !password}>
+          Login
+        </button>
+      </p>
+    </form>
+  );
+};
+export default Login;

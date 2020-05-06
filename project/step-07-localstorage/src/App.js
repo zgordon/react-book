@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
-import SimpleStorage from "react-simple-storage";
+import { useStorageState } from "react-storage-hooks";
 
 import Header from "./components/Header";
 import Message from "./components/Message";
@@ -16,110 +16,96 @@ import NotFound from "./components/NotFound";
 
 import "./App.css";
 
-class App extends Component {
-  state = {
-    posts: [],
-    message: null
-  };
-  getNewSlugFromTitle = title =>
-    encodeURIComponent(
-      title
-        .toLowerCase()
-        .split(" ")
-        .join("-")
-    );
-  addNewPost = post => {
-    post.id = this.state.posts.length + 1;
-    post.slug = this.getNewSlugFromTitle(post.title);
-    this.setState({
-      posts: [...this.state.posts, post],
-      message: "saved"
-    });
+const App = (props) => {
+  const [posts, setPosts] = useStorageState(localStorage, `state-posts`, []);
+  const [message, setMessage] = useState(null);
+
+  const setFlashMessage = (message) => {
+    setMessage(message);
     setTimeout(() => {
-      this.setState({ message: null });
+      setMessage(null);
     }, 1600);
   };
-  updatePost = post => {
-    post.slug = this.getNewSlugFromTitle(post.title);
-    const index = this.state.posts.findIndex(p => p.id === post.id);
-    const posts = this.state.posts
-      .slice(0, index)
-      .concat(this.state.posts.slice(index + 1));
-    const newPosts = [...posts, post].sort((a, b) => a.id - b.id);
-    this.setState({ posts: newPosts, message: "updated" });
-    setTimeout(() => {
-      this.setState({ message: null });
-    }, 1600);
+
+  const getNewSlugFromTitle = (title) =>
+    encodeURIComponent(title.toLowerCase().split(" ").join("-"));
+
+  const addNewPost = (post) => {
+    post.id = posts.length + 1;
+    post.slug = getNewSlugFromTitle(post.title);
+    setPosts([...posts, post]);
+    setFlashMessage(`saved`);
   };
-  deletePost = post => {
+
+  const updatePost = (post) => {
+    post.slug = getNewSlugFromTitle(post.title);
+    const index = posts.findIndex((p) => p.id === post.id);
+    const oldPosts = posts.slice(0, index).concat(posts.slice(index + 1));
+    const updatedPosts = [...oldPosts, post].sort((a, b) => a.id - b.id);
+    setPosts(updatedPosts);
+    setFlashMessage(`updated`);
+  };
+
+  const deletePost = (post) => {
     if (window.confirm("Delete this post?")) {
-      const index = this.state.posts.findIndex(p => p.id === post.id);
-      const posts = this.state.posts
-        .slice(0, index)
-        .concat(this.state.posts.slice(index + 1));
-      this.setState({ posts, message: "deleted" });
-      setTimeout(() => {
-        this.setState({ message: null });
-      }, 1600);
+      const updatedPosts = posts.filter((p) => p.id !== post.id);
+      setPosts(updatedPosts);
+      setFlashMessage(`deleted`);
     }
   };
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <SimpleStorage parent={this} />
-          <Header />
-          {this.state.message && <Message type={this.state.message} />}
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Posts posts={this.state.posts} deletePost={this.deletePost} />
-              )}
-            />
-            <Route
-              path="/post/:postSlug"
-              render={props => {
-                const post = this.state.posts.find(
-                  post => post.slug === props.match.params.postSlug
-                );
-                if (post) {
-                  return <Post post={post} />;
-                } else {
-                  return <Redirect to="/" />;
-                }
-              }}
-            />
-            <Route
-              exact
-              path="/new"
-              render={() => (
-                <PostForm
-                  addNewPost={this.addNewPost}
-                  post={{ id: 0, slug: "", title: "", content: "" }}
-                />
-              )}
-            />
-            <Route
-              path="/edit/:postSlug"
-              render={props => {
-                const post = this.state.posts.find(
-                  post => post.slug === props.match.params.postSlug
-                );
-                if (post) {
-                  return <PostForm updatePost={this.updatePost} post={post} />;
-                } else {
-                  return <Redirect to="/" />;
-                }
-              }}
-            />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
-}
+
+  return (
+    <Router>
+      <div className="App">
+        <Header />
+        {message && <Message type={message} />}
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <Posts posts={posts} deletePost={deletePost} />}
+          />
+          <Route
+            path="/post/:postSlug"
+            render={(props) => {
+              const post = posts.find(
+                (post) => post.slug === props.match.params.postSlug
+              );
+              if (post) {
+                return <Post post={post} />;
+              } else {
+                return <Redirect to="/" />;
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/new"
+            render={() => (
+              <PostForm
+                addNewPost={addNewPost}
+                post={{ id: 0, slug: "", title: "", content: "" }}
+              />
+            )}
+          />
+          <Route
+            path="/edit/:postSlug"
+            render={(props) => {
+              const post = posts.find(
+                (post) => post.slug === props.match.params.postSlug
+              );
+              if (post) {
+                return <PostForm updatePost={updatePost} post={post} />;
+              } else {
+                return <Redirect to="/" />;
+              }
+            }}
+          />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </Router>
+  );
+};
 
 export default App;

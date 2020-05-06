@@ -1,12 +1,14 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import firebase from "./firebase";
-import SimpleStorage from "react-simple-storage";
+import { useStorageState } from "react-storage-hooks";
+
+import UserContext from "./context/UserContext";
 
 import Header from "./components/Header";
 import Message from "./components/Message";
@@ -18,75 +20,73 @@ import NotFound from "./components/NotFound";
 
 import "./App.css";
 
-class App extends Component {
-  state = {
-    isAuthenticated: false,
-    posts: [],
-    message: null
-  };
-  onLogin = (email, password) => {
-    console.log(email, password);
+const App = (props) => {
+  const [user, setUser] = useStorageState(localStorage, "state-user", {});
+  const [posts, setPosts] = useStorageState(localStorage, `state-posts`, []);
+  const [message, setMessage] = useState(null);
+
+  const onLogin = (email, password) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        this.setState({ isAuthenticated: true });
+      .then((response) => {
+        setUser({
+          email: response.user["email"],
+          isAuthenticated: true,
+        });
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   };
-  onLogout = () => {
+
+  const onLogout = () => {
     firebase
       .auth()
       .signOut()
       .then(() => {
-        this.setState({ isAuthenticated: false });
+        setUser({ isAuthenticated: false });
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   };
-  getNewSlugFromTitle = title =>
-    encodeURIComponent(
-      title
-        .toLowerCase()
-        .split(" ")
-        .join("-")
-    );
-  addNewPost = post => {
+
+  const setFlashMessage = (message) => {
+    setMessage(message);
+    setTimeout(() => {
+      setMessage(null);
+    }, 1600);
+  };
+
+  const getNewSlugFromTitle = (title) =>
+    encodeURIComponent(title.toLowerCase().split(" ").join("-"));
+
+  const addNewPost = (post) => {
     const postsRef = firebase.database().ref("posts");
-    post.slug = this.getNewSlugFromTitle(post.title);
+    post.slug = getNewSlugFromTitle(post.title);
     delete post.key;
     postsRef.push(post);
-    this.setState({
-      message: "saved"
-    });
-    setTimeout(() => {
-      this.setState({ message: null });
-    }, 1600);
+    setFlashMessage(`saved`);
   };
-  updatePost = post => {
+
+  const updatePost = (post) => {
     const postRef = firebase.database().ref("posts/" + post.key);
     postRef.update({
-      slug: this.getNewSlugFromTitle(post.title),
+      slug: getNewSlugFromTitle(post.title),
       title: post.title,
-      content: post.content
+      content: post.content,
     });
-    this.setState({ message: "updated" });
-    setTimeout(() => {
-      this.setState({ message: null });
-    }, 1600);
+    setFlashMessage(`updated`);
   };
-  deletePost = post => {
+
+  const deletePost = (post) => {
     if (window.confirm("Delete this post?")) {
       const postRef = firebase.database().ref("posts/" + post.key);
       postRef.remove();
-      this.setState({ message: "deleted" });
-      setTimeout(() => {
-        this.setState({ message: null });
-      }, 1600);
+      setFlashMessage(`deleted`);
     }
   };
-  componentDidMount() {
+
+  useEffect(() => {
     const postsRef = firebase.database().ref("posts");
-    postsRef.on("value", snapshot => {
+    postsRef.on("value", (snapshot) => {
       const posts = snapshot.val();
       const newStatePosts = [];
       for (let post in posts) {
@@ -94,39 +94,30 @@ class App extends Component {
           key: post,
           slug: posts[post].slug,
           title: posts[post].title,
-          content: posts[post].content
+          content: posts[post].content,
         });
       }
-      this.setState({ posts: newStatePosts });
+      setPosts(newStatePosts);
     });
-  }
-  render() {
-    return (
-      <Router>
+  }, [setPosts]);
+
+  return (
+    <Router>
+      <UserContext.Provider value={{ user, onLogin, onLogout }}>
         <div className="App">
-          <SimpleStorage parent={this} />
-          <Header
-            isAuthenticated={this.state.isAuthenticated}
-            onLogout={this.onLogout}
-          />
-          {this.state.message && <Message type={this.state.message} />}
+          <Header />
+          {message && <Message type={message} />}
           <Switch>
             <Route
               exact
               path="/"
-              render={() => (
-                <Posts
-                  isAuthenticated={this.state.isAuthenticated}
-                  posts={this.state.posts}
-                  deletePost={this.deletePost}
-                />
-              )}
+              render={() => <Posts posts={posts} deletePost={deletePost} />}
             />
             <Route
               path="/post/:postSlug"
-              render={props => {
-                const post = this.state.posts.find(
-                  post => post.slug === props.match.params.postSlug
+              render={(props) => {
+                const post = posts.find(
+                  (post) => post.slug === props.match.params.postSlug
                 );
                 if (post) {
                   return <Post post={post} />;
@@ -139,35 +130,35 @@ class App extends Component {
               exact
               path="/login"
               render={() =>
-                !this.state.isAuthenticated ? (
-                  <Login onLogin={this.onLogin} />
-                ) : (
-                  <Redirect to="/" />
-                )
+                !user.isAuthenticated ? <Login /> : <Redirect to="/" />
               }
             />
             <Route
               exact
               path="/new"
               render={() =>
-                this.state.isAuthenticated ? (
+                user.isAuthenticated ? (
                   <PostForm
-                    addNewPost={this.addNewPost}
+                    addNewPost={addNewPost}
                     post={{ key: null, slug: "", title: "", content: "" }}
                   />
                 ) : (
-                  <Redirect to="/" />
+                  <Redirect to="/login" />
                 )
               }
             />
             <Route
               path="/edit/:postSlug"
-              render={props => {
-                const post = this.state.posts.find(
-                  post => post.slug === props.match.params.postSlug
+              render={(props) => {
+                const post = posts.find(
+                  (post) => post.slug === props.match.params.postSlug
                 );
-                if (post && this.state.isAuthenticated) {
-                  return <PostForm updatePost={this.updatePost} post={post} />;
+                if (post) {
+                  if (user.isAuthenticated) {
+                    return <PostForm updatePost={updatePost} post={post} />;
+                  } else {
+                    return <Redirect to="/login" />;
+                  }
                 } else {
                   return <Redirect to="/" />;
                 }
@@ -176,9 +167,9 @@ class App extends Component {
             <Route component={NotFound} />
           </Switch>
         </div>
-      </Router>
-    );
-  }
-}
+      </UserContext.Provider>
+    </Router>
+  );
+};
 
 export default App;

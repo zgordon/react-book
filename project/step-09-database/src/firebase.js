@@ -8,7 +8,7 @@ const config = {
   databaseURL: "https://react-explained-blog-demo.firebaseio.com",
   projectId: "react-explained-blog-demo",
   storageBucket: "react-explained-blog-demo.appspot.com",
-  messagingSenderId: "983332576012"
+  messagingSenderId: "983332576012",
 };
 firebase.initializeApp(config);
 export default firebase;

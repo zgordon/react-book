@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,11 +23,7 @@ import "./App.css";
 const App = (props) => {
   const [user, setUser] = useStorageState(localStorage, "state-user", {});
   const [posts, setPosts] = useStorageState(localStorage, "state-posts", []);
-  const [message, setMessage] = useStorageState(
-    localStorage,
-    "state-message",
-    null
-  );
+  const [message, setMessage] = useState(null);
 
   const onLogin = (email, password) => {
     firebase
@@ -52,6 +48,13 @@ const App = (props) => {
       .catch((error) => console.error(error));
   };
 
+  const setFlashMessage = (message) => {
+    setMessage(message);
+    setTimeout(() => {
+      setMessage(null);
+    }, 1600);
+  };
+
   const getNewSlugFromTitle = (title) =>
     encodeURIComponent(title.toLowerCase().split(" ").join("-"));
 
@@ -60,11 +63,9 @@ const App = (props) => {
     post.slug = getNewSlugFromTitle(post.title);
     delete post.key;
     postsRef.push(post);
-    setMessage("saved");
-    setTimeout(() => {
-      setMessage(null);
-    }, 1600);
+    setFlashMessage(`saved`);
   };
+
   const updatePost = (post) => {
     const postRef = firebase.database().ref("posts/" + post.key);
     postRef.update({
@@ -72,19 +73,14 @@ const App = (props) => {
       title: post.title,
       content: post.content,
     });
-    setMessage("updated");
-    setTimeout(() => {
-      setMessage(null);
-    }, 1600);
+    setFlashMessage(`updated`);
   };
+
   const deletePost = (post) => {
     if (window.confirm("Delete this post?")) {
       const postRef = firebase.database().ref("posts/" + post.key);
       postRef.remove();
-      setMessage("deleted");
-      setTimeout(() => {
-        setMessage(null);
-      }, 1600);
+      setFlashMessage(`deleted`);
     }
   };
 
@@ -161,8 +157,12 @@ const App = (props) => {
                 const post = posts.find(
                   (post) => post.slug === props.match.params.postSlug
                 );
-                if (post && user.isAuthenticated) {
-                  return <PostForm updatePost={updatePost} post={post} />;
+                if (post) {
+                  if (user.isAuthenticated) {
+                    return <PostForm updatePost={updatePost} post={post} />;
+                  } else {
+                    return <Redirect to="/login" />;
+                  }
                 } else {
                   return <Redirect to="/" />;
                 }

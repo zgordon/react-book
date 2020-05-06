@@ -1,35 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
 
-const Header = ({ isAuthenticated, onLogout }) => (
-  <header className="App-header">
-    <ul className="container">
-      <li>
-        <Link to="/">My Site</Link>
-      </li>
-      {isAuthenticated ? (
-        <>
-          <li>
-            <Link to="/new">New Post</Link>
-          </li>
-          <li>
-            <button
-              className="linkLike"
-              onClick={e => {
-                e.preventDefault();
-                onLogout();
-              }}
-            >
-              Logout
-            </button>
-          </li>
-        </>
-      ) : (
+const Header = (props) => {
+  const { user, onLogout } = useContext(UserContext);
+
+  return (
+    <header className="App-header">
+      <ul className="container">
         <li>
-          <Link to="/login">Login</Link>
+          <Link to="/">My Site</Link>
         </li>
-      )}
-    </ul>
-  </header>
-);
+        {user.isAuthenticated ? (
+          <>
+            <li>
+              <Link to="/new">New Post</Link>
+            </li>
+            <li>
+              <button
+                className="linkLike"
+                onClick={(event) => {
+                  event.preventDefault();
+                  onLogout();
+                }}
+              >
+                Logout
+              </button>
+            </li>
+          </>
+        ) : (
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
+      </ul>
+    </header>
+  );
+};
+
 export default Header;

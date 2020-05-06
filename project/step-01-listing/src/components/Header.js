@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = props => (
+const Header = (props) => (
   <header className="App-header">
     <ul className="container">
       <li>Site Title</li>
