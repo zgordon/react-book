@@ -414,7 +414,7 @@ This shows us that we can have multiple `useEffect` hooks in the same function. 
 
 ## Cleaning Up After Use Effect
 
-The final lifecycle hook `useEffect` ties in to is `componentDidMount`, which runs after a component is removed from the page.
+The final lifecycle hook `useEffect` ties in to is `componentWillUnmount`, which runs after a component is removed from the page.
 
 Sometimes, like when working with timers or subscriptions, you will want stop those processes when the component is removed.
 
