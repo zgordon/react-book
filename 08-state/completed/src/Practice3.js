@@ -6,8 +6,8 @@ import React from "react";
 */
 const UserForm = props => (
   <p>
-    <label htmlFor="{props.id}">{props.label}</label>:
-    <input id="{props.id}" type="text" onChange="{props.onChange}" />
+    <label htmlFor={props.id}>{props.label}</label>:
+    <input id={props.id} type="text" onChange={props.onChange} />
   </p>
 );
 
