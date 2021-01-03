@@ -27,6 +27,9 @@ class Practice5 extends React.Component {
   render() {
     return (
       <div>
+        {/* 
+          1. Add a stopTimer prop with a value equal to this.stopTimer
+        */}
         {this.state.points < this.state.goal ? (
           <BarChart points={this.state.points} />
         ) : (
@@ -48,9 +51,9 @@ class Practice5 extends React.Component {
 
 class BarChart extends React.Component {
   /*
-    6. Call componentWillUnmount()
-    7. Inside of componentWillUnmount() log out that the <BarChart /> Component is unmounting
-    8. The call this.props.stopTimer(); to stop the timer from running
+    2. Call componentWillUnmount()
+    3. Inside of componentWillUnmount() log out that the <BarChart /> Component is unmounting
+    4. The call this.props.stopTimer(); to stop the timer from running
   */
 
   render() {

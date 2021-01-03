@@ -27,10 +27,10 @@ const Practice5 = () => {
   return (
     <div>
       <UserContext.Provider
-        value={{ user: this.state.user, updateUser: this.updateUser }}
+        value={{ user, updateUser }}
       >
         <FormContext.Provider
-          value={{ step: this.state.step, updateStep: this.updateStep }}
+          value={{ step, updateStep }}
         >
           <Header>
             <NavBar>
